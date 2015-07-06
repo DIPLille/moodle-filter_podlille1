@@ -1,7 +1,7 @@
 <?php // $Id$
 // English language string for filter/PodLille1.
 
-$string['filtername']	= 'PodLille1 URLs';
+$string['filtername']   = 'PodLille1 URLs';
 $string['url']          = "URL";
 $string['url_desc']     = "POD's server URL, without http(s)://.";
 $string['url_help']     = "It's the URL of the POD server.<br> (default value = pod.univ-lille1.fr)";

@@ -17,12 +17,12 @@ defined('MOODLE_INTERNAL') || die();
 class filter_podlille1 extends moodle_text_filter {
 
     /**
-	 * Filtre PodLille pour Moodle
+     * Filtre PodLille pour Moodle
      *
      * @param string $text le texte contenant éventuellement une url pod à filtrer
      * @return string le texte dans lequel les url pod sont remplacées par un code iframe
      */
-	public function filter($text, array $options = array()) {
+    public function filter($text, array $options = array()) {
         global $CFG, $COURSE, $PAGE;
 
         // Initialisation des valeurs par défauts au cas où l'administrateur n'aurait pas correctement renseignée la configuration globale du filtre
@@ -39,8 +39,8 @@ class filter_podlille1 extends moodle_text_filter {
         // On récupère les paramètres du filtre dans le contexte d'exécution actuel
         $courseconfig = get_active_filters($coursecontext->id);
 
-		// Si aucun paramètre local ne définit l'url du serveur pod, on cherche d'abord dans le contexte, puis enfin une valeur globale en dernier recours.
-		if (isset($this->localconfig['url'])) 
+        // Si aucun paramètre local ne définit l'url du serveur pod, on cherche d'abord dans le contexte, puis enfin une valeur globale en dernier recours.
+        if (isset($this->localconfig['url'])) 
             $config['url'] = $this->localconfig['url'];
         elseif (isset($courseconfig['url'])) 
             $config['url'] = $courseconfig['url'];
@@ -48,27 +48,27 @@ class filter_podlille1 extends moodle_text_filter {
             $config['url'] =  $CFG->filter_podlille1_url;
         
 
-		// Vérification rapide si l'url ne se trouve pas dans le texte à filtrer, pour éviter un travail inutile ensuite.
-		if (stripos($text, $config['url']) === false) {
-			return $text;
-		}
+        // Vérification rapide si l'url ne se trouve pas dans le texte à filtrer, pour éviter un travail inutile ensuite.
+        if (stripos($text, $config['url']) === false) {
+            return $text;
+        }
 
-		// En fontion de l'existence ou non de paramètres locaux, contextuels et enfin généraux, on définit les valeurs des paramètres de l'url.
-		if (isset($this->localconfig['size'])) 
+        // En fontion de l'existence ou non de paramètres locaux, contextuels et enfin généraux, on définit les valeurs des paramètres de l'url.
+        if (isset($this->localconfig['size'])) 
             $config['size'] = $this->localconfig['size'];
         elseif (isset($courseconfig['size'])) 
             $config['size'] = $courseconfig['size'];
         elseif (isset($CFG->filter_podlille1_size) && ($CFG->filter_podlille1_size != null) )
             $config['size'] =  $CFG->filter_podlille1_size;
         
-		if (isset($this->localconfig['width'])) 
+        if (isset($this->localconfig['width'])) 
             $config['width'] = $this->localconfig['width'];
         elseif (isset($courseconfig['width'])) 
             $config['width'] = $courseconfig['width'];
         elseif (isset($CFG->filter_podlille1_width) && ($CFG->filter_podlille1_width != null) )
             $config['width'] =  $CFG->filter_podlille1_width;
         
-		if (isset($this->localconfig['height'])) 
+        if (isset($this->localconfig['height'])) 
             $config['height'] = $this->localconfig['height'];
         elseif (isset($courseconfig['height'])) 
             $config['height'] = $courseconfig['height'];
@@ -78,9 +78,9 @@ class filter_podlille1 extends moodle_text_filter {
         // On stocke les valeurs dans la variable localconfig pour pouvoir les récupérer dans la fonction de callback plus tard.
         $this->localconfig['config'] = $config;
 
-		$matches = array();
-		
-		/// Expression régulière pour définir une url podlille1 standard et éviter celles déjà contenues dans une iframe
+        $matches = array();
+        
+        /// Expression régulière pour définir une url podlille1 standard et éviter celles déjà contenues dans une iframe
         $word = addslashes($config['url']);          // On protège les slash de l'url utilisée ensuite dans la RegExp
         $text = htmlspecialchars_decode($text);      // On enlève les &amps; et &quote; éventuellement ajoutés par l'éditeur riche
         $iframetagpattern   = '(?P<ifr>iframe\s+src\s*=\s*")?';                                         // Pour capturer une balise iframe avec la clé "ifr"
@@ -91,31 +91,31 @@ class filter_podlille1 extends moodle_text_filter {
         // Il ne peut y avoir que quatre paramètres possibles : is_iframe, start, size et autoplay, donc on ne capture que quatre paramètres
         // Telle qu'est définie l'expression régulière ci-dessous, l'url de la vidéo sera capturée avec la clé "pod", c'est important pour la suite !
         $pat = '('.$iframetagpattern.$podpattern.$parampattern.$parampattern.$parampattern.$parampattern.')';
-		// On lance le remplacement proprement dit :
-		$text       = preg_replace_callback($pat, array(&$this, 'filter_podlille1::filtre_podlille1'), $text, -1, $cpt);
+        // On lance le remplacement proprement dit :
+        $text       = preg_replace_callback($pat, array(&$this, 'filter_podlille1::filtre_podlille1'), $text, -1, $cpt);
 
-		// On retourne le texte filtré
-		return $text;
-	}
+        // On retourne le texte filtré
+        return $text;
+    }
 
 
-	/**
-	 * Fonction récupérant les résultats de preg_replace et
-	 * utilisant la fonction callback pour faire le remplacement.
-	 * Elle vérifie si on a déjà affaire à une iframe, auquel cas, on ne remplace rien.
+    /**
+     * Fonction récupérant les résultats de preg_replace et
+     * utilisant la fonction callback pour faire le remplacement.
+     * Elle vérifie si on a déjà affaire à une iframe, auquel cas, on ne remplace rien.
      *
      * @param array $matches un tableau contenant toutes les captures de l'expression régulière.
      * @return string le texte de l'iframe remplaçant l'url de la vidéo
-	 */
+     */
     function filtre_podlille1($matches) {
         // On ne filtre pas une url pod déjà incluse dans une iframe
         if ($matches["ifr"]) {
             return $matches[0];
         } else {
             // On filtre chaque url pod trouvée par l'expression régulière
-			return remplace_url($matches, $this->localconfig['config']);
+            return remplace_url($matches, $this->localconfig['config']);
         }
-	}
+    }
 }
 
 
@@ -132,9 +132,9 @@ function remplace_url($matches, $config) {
     $u = $matches['pod'];
 
     // Par défaut, on définit les valeurs en fonction des réglages du filtre dans l'activité
-    $width	    = ' width="'.$config['width'].'" ';
+    $width      = ' width="'.$config['width'].'" ';
     $height     = ' height="'.$config['height'].'" ';
-    $size	    = '&size='.$config['size'];
+    $size       = '&size='.$config['size'];
     $autoplay   = '';
     $start      = '';
 
