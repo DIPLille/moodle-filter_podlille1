@@ -179,7 +179,7 @@ function get_active_filters($contextid) {
             FROM (SELECT f.FILTER
             FROM {filter_active} f
             JOIN {context} ctx ON f.contextid = ctx.id
-            WHERE ctx.id IN ($contextid)
+            WHERE ctx.id IN ($contextid) AND f.FILTER LIKE 'podlille1'
             GROUP BY FILTER
             HAVING MAX(f.active * ctx.depth) > -MIN(f.active * ctx.depth)
             ORDER BY MAX(f.sortorder)) active
