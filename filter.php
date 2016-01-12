@@ -40,9 +40,9 @@ class filter_podlille1 extends moodle_text_filter {
         $courseconfig = get_active_filters($coursecontext->id);
 
         // Si aucun paramètre local ne définit l'url du serveur pod, on cherche d'abord dans le contexte, puis enfin une valeur globale en dernier recours.
-        if (isset($this->localconfig['url'])) 
+        if (isset($this->localconfig['url']))
             $config['url'] = $this->localconfig['url'];
-        elseif (isset($courseconfig['url'])) 
+        elseif (isset($courseconfig['url']))
             $config['url'] = $courseconfig['url'];
         elseif (isset($CFG->filter_podlille1_url) && ($CFG->filter_podlille1_url != null) )
             $config['url'] =  $CFG->filter_podlille1_url;
@@ -54,23 +54,23 @@ class filter_podlille1 extends moodle_text_filter {
         }
 
         // En fontion de l'existence ou non de paramètres locaux, contextuels et enfin généraux, on définit les valeurs des paramètres de l'url.
-        if (isset($this->localconfig['size'])) 
+        if (isset($this->localconfig['size']))
             $config['size'] = $this->localconfig['size'];
-        elseif (isset($courseconfig['size'])) 
+        elseif (isset($courseconfig['size']))
             $config['size'] = $courseconfig['size'];
         elseif (isset($CFG->filter_podlille1_size) && ($CFG->filter_podlille1_size != null) )
             $config['size'] =  $CFG->filter_podlille1_size;
         
-        if (isset($this->localconfig['width'])) 
+        if (isset($this->localconfig['width']))
             $config['width'] = $this->localconfig['width'];
-        elseif (isset($courseconfig['width'])) 
+        elseif (isset($courseconfig['width']))
             $config['width'] = $courseconfig['width'];
         elseif (isset($CFG->filter_podlille1_width) && ($CFG->filter_podlille1_width != null) )
             $config['width'] =  $CFG->filter_podlille1_width;
         
-        if (isset($this->localconfig['height'])) 
+        if (isset($this->localconfig['height']))
             $config['height'] = $this->localconfig['height'];
-        elseif (isset($courseconfig['height'])) 
+        elseif (isset($courseconfig['height']))
             $config['height'] = $courseconfig['height'];
         elseif (isset($CFG->filter_podlille1_height) && ($CFG->filter_podlille1_height != null) )
             $config['height'] =  $CFG->filter_podlille1_height;
@@ -84,7 +84,7 @@ class filter_podlille1 extends moodle_text_filter {
         $word = addslashes($config['url']);          // On protège les slash de l'url utilisée ensuite dans la RegExp
         $text = htmlspecialchars_decode($text);      // On enlève les &amps; et &quote; éventuellement ajoutés par l'éditeur riche
         $iframetagpattern   = '(?P<ifr>iframe\s+src\s*=\s*")?';                                         // Pour capturer une balise iframe avec la clé "ifr"
-        $podpattern         = '((?:https?\:)?(?:\/\/)?(?P<pod>'.$word.'\/[a-zA-Z\d\-\/]*video\/[a-zA-Z\d\-]+\/))';   // Pour capturer l'url de la vidéo
+        $podpattern         = '((?:https?\:)?(?:\/\/)?(?P<pod>'.$word.'\/[a-zA-Z\d\-\/_]*video\/[a-zA-Z\d\-_]+\/))';   // Pour capturer l'url de la vidéo
         $parampattern       = '(?:([(\?|\&)a-zA-Z_]*=)([a-zA-Z\d]*))?';                                 // Pour capturer un paramètre d'url
         //$tousparampattern     = '(\?[a-zA-Z\d_=\&]*)*';                                               // Inutilisé : capturer tous les paramètres d'un coup
 
