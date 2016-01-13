@@ -21,13 +21,13 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package    filter
  * @subpackage podlille
- * @copyright  2014-2015 Gaël Mifsud / SEMM Université Lille1 
+ * @copyright  2014-2016 Gaël Mifsud / SEMM Université Lille1
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later / MIT / Public Domain
  */
 
 $plugin->component = 'filter_podlille1';    // Full name of the plugin (used for diagnostics)
-$plugin->version   = 2015070601;            // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2016011101;            // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2013111800;            // Requires this Moodle version
-$plugin->release   = '1.0.2';               // Human-friendly version name http://docs.moodle.org/dev/Releases
+$plugin->release   = '1.0.3';               // Human-friendly version name http://docs.moodle.org/dev/Releases
 $plugin->maturity  = MATURITY_STABLE;       // This version's maturity level
 
