@@ -5,7 +5,7 @@
   *
   * @package    filter
   * @subpackage podlille1
-  * @copyright  2014-2015 Gaël Mifsud / SEMM Université Lille1
+  * @copyright  2014-2016 Gaël Mifsud / SEMM Université Lille1
   * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
